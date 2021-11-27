@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Get Pikachu!</h1>
+    <button type="button" onclick="getPokemon()">GET!</button>
+    <div class="pokemon-Container"></div>
+    <script>
+      function getPokemon() {
+        pokemonContainer = document.querySelector('.pokemon-Container');
+        function fetchPokemon(id) {
+          fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              createPokemon(data);
+            });
+        }
+
+        function createPokemon(pokemon) {
+          const kartu = document.createElement('div');
+          kartu.classList.add('kartu');
+
+          const isikartu = document.createElement('div');
+          isikartu.classList.add('isiKartu');
+
+          const name = document.createElement('p');
+          name.innerHTML = `No.${pokemon.id.toString()} - ${pokemon.name}`;
+
+          const gambarPoke = document.createElement('img');
+          gambarPoke.src = pokemon.sprites.front_default;
+          gambarPoke.width = '150';
+
+          const tipe = document.createElement('p');
+          tipe.innerHTML = `${pokemon.types[0].type.name}`;
+
+          pokemonContainer.appendChild(kartu);
+          kartu.appendChild(isikartu);
+
+          isikartu.appendChild(name);
+          isikartu.appendChild(gambarPoke);
+          isikartu.appendChild(tipe);
+
+          kartu.style.margin = '25px';
+          kartu.style.width = '180px';
+          kartu.style.backgroundColor = 'rgb(232, 247, 100)';
+
+          isikartu.style.boxShadow = '0 4px 8px 0 rgba(0, 0, 0, 0.3)';
+          isikartu.style.padding = '2px 20px';
+          kartu.style.backgroundColor = 'rgb(232, 247, 100)';
+        }
+        fetchPokemon(25);
+      }
+    </script>
+  </body>
+</html>
